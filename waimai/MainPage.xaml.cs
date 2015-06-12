@@ -108,9 +108,11 @@ namespace waimai
                 jsonObject = JsonObject.Parse(responseText);
                 LocationTb.Text = jsonObject["name"].GetString();
                 //next things need to be modified by command Post
-                msg = await a.GetAsync(new Uri(address));
-                msg.EnsureSuccessStatusCode();
-                responseText = await msg.Content.ReadAsStringAsync();
+                postJson.buildJson(geoh, "7284397383");
+                postJson.HttpPost(address);
+                // msg = await a.GetAsync(new Uri(address));
+                // msg.EnsureSuccessStatusCode();
+                responseText = postJson.finalStr; //await msg.Content.ReadAsStringAsync();
                 Debug.WriteLine(responseText);
                 //jsonObject = JsonObject.Parse(responseText);
                 // Type x = jsonObject["home"].GetType();

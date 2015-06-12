@@ -1,0 +1,52 @@
+﻿<Page
+    x:Class="waimai.DetailRest"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:waimai"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Background="White">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"></RowDefinition>
+                <RowDefinition Height="70"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <ListView Name="itemList" Grid.Column="0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <!--I will go on tomorrow-->
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+            <!--<TextBlock Name="tb1" Foreground="Black" FontWeight="Bold" FontSize="20" TextWrapping="Wrap"></TextBlock>-->
+            <Grid  Background="#5CACEE">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Image  Height="40" Source="/Assets/yyb_icon_back.png" Margin="25,0,0,0" HorizontalAlignment="Left" Tapped="Image_Tapped"></Image>
+                <TextBlock Grid.Column="1" Name="restNameTb" FontSize="30" Foreground="White" Text="味栈" Margin="-30,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+            </Grid>
+            <Grid Grid.Row="1" Background="#F7F7F7">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock FontSize="25" Foreground="Black" Text="菜单" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Column="1" FontSize="25" Foreground="Black" Text="照片" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Column="2" FontSize="25" Foreground="Black" Text="餐厅" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

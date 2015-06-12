@@ -34,5 +34,6 @@ namespace waimai.BingdingClass
         public string name_for_url { set; get; }
         public string Rate { set; get; }
         public string Total { set; get; }
+        public string deliverMode { set; get; }//配送方式
     }
 }

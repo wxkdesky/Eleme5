@@ -57,7 +57,7 @@
                                 <TextBlock FontSize="15" Foreground="Red" Text="{Binding Path=iconCheck}"></TextBlock>
                                 <TextBlock FontSize="15" Foreground="Red" Text="{Binding Path=iconDeliver}"></TextBlock>
                             </StackPanel>
-                            <TextBlock Grid.Row="2" Grid.Column="2" FontSize="15" Foreground="Gray" Text="餐厅配送" Margin="20,0,0,0"></TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="2" FontSize="15" Foreground="Gray" Text="{Binding Path=deliverMode}" Margin="20,0,0,0"></TextBlock>
                             <StackPanel Name="lastLine" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2">
                                 <StackPanel Orientation="Horizontal" >
                                     <TextBlock FontSize="18" Foreground="Purple" Text="{Binding Path=iconMinus}"></TextBlock>

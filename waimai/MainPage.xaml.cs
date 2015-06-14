@@ -97,7 +97,7 @@ namespace waimai
             geoh = Geohash.Encode(latitude,longitude);
             //geoh = "wtw37tkct0fw";
             msg = new HttpResponseMessage();
-            string address = "http://restapi.ele.me/batch"; //"http://api.ele.me/1/home?banner_width=640&consumer_key=7284397383&geohash="+ geoh+"&session_id=066b2f78e5b6a28eba862842e911d19c&sig=0&timestamp=" + time + "&track_id=1431963253%7C_561daf6c-fd73-11e4-bf65-549f3515da4c%7Cdffd7577b1ef7a401665a87e8bdda416"; //geohash=wtw37tkct0fw    "http://v2.openapi.ele.me/restaurants?geo=" + longitude+","+latitude;sig=b13cf07a2fcce597ef70c6d15c46a50e
+            string address = "http://restapi.ele.me/v1/restaurants?extras%5B%5D=food_activity&extras%5B%5D=restaurant_activity&full_image_path=1&consumer_key=7284397383&geohash=" + geoh + "&is_premium=0&limit=30&type=geohash"; //"http://api.ele.me/1/home?banner_width=640&consumer_key=7284397383&geohash="+ geoh+"&session_id=066b2f78e5b6a28eba862842e911d19c&sig=0&timestamp=" + time + "&track_id=1431963253%7C_561daf6c-fd73-11e4-bf65-549f3515da4c%7Cdffd7577b1ef7a401665a87e8bdda416"; //geohash=wtw37tkct0fw    "http://v2.openapi.ele.me/restaurants?geo=" + longitude+","+latitude;sig=b13cf07a2fcce597ef70c6d15c46a50e
             string location = "http://restapi.ele.me/v1/pois/"+geoh;
             try
             {
@@ -107,12 +107,10 @@ namespace waimai
                 Debug.WriteLine(responseText);
                 jsonObject = JsonObject.Parse(responseText);
                 LocationTb.Text = jsonObject["name"].GetString();
-                //next things need to be modified by command Post
-                postJson.buildJson(geoh, "7284397383");
-                postJson.HttpPost(address);
-                // msg = await a.GetAsync(new Uri(address));
-                // msg.EnsureSuccessStatusCode();
-                responseText = postJson.finalStr; //await msg.Content.ReadAsStringAsync();
+                //next things need to be modified by command Post               
+                msg = await a.GetAsync(new Uri(address));
+                msg.EnsureSuccessStatusCode();
+               responseText= await msg.Content.ReadAsStringAsync();
                 Debug.WriteLine(responseText);
                 //jsonObject = JsonObject.Parse(responseText);
                 // Type x = jsonObject["home"].GetType();
@@ -124,6 +122,7 @@ namespace waimai
             catch (Exception ex)
             {
                 //tb1.Text = "Network request failed" + ex.Message;
+                Debug.WriteLine("error");
             }
             connect.Background = new SolidColorBrush(Windows.UI.Colors.Orange);
 
@@ -132,15 +131,15 @@ namespace waimai
         private void bt1_Click(object sender, RoutedEventArgs e)
         {
             myArray = JsonArray.Parse(responseText);
-            jsonObject = myArray[4].GetObject();
-            restArray = jsonObject["body"].GetArray();
+            //jsonObject = myArray[4].GetObject();
+           // restArray = jsonObject["body"].GetArray();
 
             //jsonObject = JsonObject.Parse(responseText);
             // myArray = jsonObject["promotions"].GetArray();
             JsonObject temp;// = jsonObject["home"].GetObject();
            // myArray = temp["restaurants"].GetArray();
             // int nnnn = myArray.Count; 30
-            foreach (var item in restArray)
+            foreach (var item in myArray)
             {
                 myNRest = new ordinaryRest();
                 //next is to resolve the data
@@ -205,12 +204,12 @@ namespace waimai
                 //Match x = mod.Match(temp["tips"].GetString());
                 //myNRest.leastMoneyTips = "￥" + x.Groups[2].Value.ToString();
                 //myNRest.monthSellTips = x.Groups[1].Value.ToString();
-                myNRest.leastMoneyTips = temp["minimum_order_amount"].GetString();
-                myNRest.monthSellTips = temp["month_sales"].GetString();
+                myNRest.leastMoneyTips ="￥"+Convert.ToString( temp["minimum_order_amount"].GetNumber());
+                myNRest.monthSellTips = "月售" + Convert.ToString( temp["month_sales"].GetNumber())+"份";
                 myNRest.name_for_url = temp["name_for_url"].GetString();
                 //double customer = temp["num_rating_1"].GetNumber() + temp["num_rating_2"].GetNumber() + temp["num_rating_3"].GetNumber() + temp["num_rating_4"].GetNumber() + temp["num_rating_5"].GetNumber();
                 //myNRest.Total = "(" + Convert.ToString(customer) + ")";
-                myNRest.Total = temp["rating_count"].GetString();
+                myNRest.Total = "(" + Convert.ToString( temp["rating_count"].GetNumber()) + ")";
                 double r = temp["rating"].GetNumber(); //(temp["num_rating_1"].GetNumber() + temp["num_rating_2"].GetNumber() * 2 + temp["num_rating_3"].GetNumber() * 3 + temp["num_rating_4"].GetNumber() * 4 + temp["num_rating_5"].GetNumber() * 5) / customer;
                 if (r > 4)
                     myNRest.Rate = "★★★★★";

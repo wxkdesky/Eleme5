@@ -11,13 +11,13 @@ using Windows.Web.Http;
 
 namespace waimai
 {
-   public static class postJson
+   public class postJson
     {
-        static string postDataStr;
-      public  static string finalStr;
-        public static string buildJson(string geohash,string consumer_key)
+      public  string postDataStr;
+      public  string finalStr;
+        public string buildJson(string geohash,string consumer_key)
         {
-          postDataStr = String.Format("{\"requests\":[{\"method\":GET,\"url\":/v1/app_banners?full_image_path=1&geohash={0}},{\"method\":GET,\"url\":url=/v1/app_activities?consumer_key={1}&full_image_path=1&geohash={0}},{\"method\":GET,\"url\":url=/v1/restaurants?extras%5B%5D=food_activity&extras%5B%5D=restaurant_activity&full_image_path=1&geohash={0}&is_premium=1&limit=3&type=geohash},{\"method\":GET,\"url\":url=/v1/restaurants/count?geohash={0}&is_premium=1&type=geohash},{\"method\":GET,\"url\":url=/v1/restaurants?extras%5B%5D=food_activity&extras%5B%5D=restaurant_activity&full_image_path=1&geohash={0}&is_premium=0&limit=30&type=geohash},{\"method\":GET,\"url\":url=/v1/restaurants/count?geohash={0}&is_premium=0&type=geohash}]}",geohash,consumer_key);
+          postDataStr ="{\"requests\":[{\"method\":GET,\"url\":/v1/app_banners?full_image_path=1&geohash="+geohash+"},{\"method\":GET,\"url\":url=/v1/app_activities?consumer_key="+consumer_key+"&full_image_path=1&geohash="+geohash+"},{\"method\":GET,\"url\":url=/v1/restaurants?extras%5B%5D=food_activity&extras%5B%5D=restaurant_activity&full_image_path=1&geohash="+geohash+"&is_premium=1&limit=3&type=geohash},{\"method\":GET,\"url\":url=/v1/restaurants/count?geohash="+geohash+"&is_premium=1&type=geohash},{\"method\":GET,\"url\":url=/v1/restaurants?extras%5B%5D=food_activity&extras%5B%5D=restaurant_activity&full_image_path=1&geohash="+geohash+"&is_premium=0&limit=30&type=geohash},{\"method\":GET,\"url\":url=/v1/restaurants/count?geohash="+geohash+ "&is_premium=0&type=geohash}],\"timeout\":15000}";
             return postDataStr;
             //StringBuilder sb = new StringBuilder();
             //for (int i = 0; i < str.Length; i++)
@@ -48,18 +48,23 @@ namespace waimai
             //str = sb.ToString();
             //return true;
        }
-
-        public async static void HttpPost(string Url)
+         HttpWebRequest request;
+        public async void HttpPost(string Url)//HttpClient a,HttpResponseMessage msg, 
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
+
+            request = (HttpWebRequest)WebRequest.Create(Url);
             request.Method = "POST";
-            request.ContentType = "application/json";
-            //request.ContentLength = Encoding.UTF8.GetByteCount(postDataStr);
+            request.ContentType = "application/json;charset=utf-8";
+            // byte[] postBytes = Encoding.UTF8.GetBytes(postDataStr);
+            // request.ContinueTimeout = 15000;
+            // //request.ContentLength = Encoding.UTF8.GetByteCount(postDataStr);
             Stream myRequestStream = await request.GetRequestStreamAsync();
-            StreamWriter myStreamWriter = new StreamWriter(myRequestStream, Encoding.GetEncoding("gb2312"));
+            StreamWriter myStreamWriter = new StreamWriter(myRequestStream, Encoding.GetEncoding("utf-8"));
             myStreamWriter.Write(postDataStr);
-            Debug.WriteLine(postDataStr);
-            var response =await request.GetResponseAsync();
+            // myRequestStream.Write(postBytes, 0, postBytes.Length);
+            await myStreamWriter.FlushAsync();
+             Debug.WriteLine(postDataStr);
+            var response = await request.GetResponseAsync();
             Stream myResponseStream = response.GetResponseStream();
             StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.GetEncoding("utf-8"));
             string retString = myStreamReader.ReadToEnd();

@@ -95,7 +95,7 @@
     </Compile>
     <Compile Include="BingdingClass\Geohash.cs" />
     <Compile Include="BingdingClass\ordinaryRest.cs" />
-    <Compile Include="BingdingClass\SpecificRest.cs" />
+    <Compile Include="BingdingClass\SpecificNRest.cs" />
     <Compile Include="DetailRest.xaml.cs">
       <DependentUpon>DetailRest.xaml</DependentUpon>
     </Compile>

@@ -24,9 +24,22 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <!--I will go on tomorrow-->
+                            <Grid Background="#E3E3E3" Name="{Binding Path=itemName}">
+                                <TextBlock FontSize="18" Text="{Binding Path=itemName}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                            </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontSize="18" FontWeight="Bold" Text="{Binding Path=itemName}"></TextBlock>
+                        <TextBlock FontSize="15" Text="{Binding Path=itemDescription}" TextWrapping="Wrap" Margin="10,0,0,0"></TextBlock>
+                    </StackPanel>
+                </Grid>
             </Grid>
             <!--<TextBlock Name="tb1" Foreground="Black" FontWeight="Bold" FontSize="20" TextWrapping="Wrap"></TextBlock>-->
             <Grid  Background="#5CACEE">

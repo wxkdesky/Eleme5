@@ -51,7 +51,7 @@ namespace waimai
         string[] nameToCopy = new string[2] { "",""};
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-
+            //name for url and restname
             string[]nameTo = (string[])e.Parameter;
             if (nameTo[0] != nameToCopy[0])
             {

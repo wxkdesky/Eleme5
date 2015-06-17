@@ -20,7 +20,7 @@
                     <ColumnDefinition Width="120"></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <ListView Name="itemList" Grid.Column="0">
+                <ListView Name="itemList" Grid.Column="0" IsItemClickEnabled="True" ItemClick="itemList_ItemClick">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <!--I will go on tomorrow-->
@@ -35,7 +35,7 @@
                         <RowDefinition Height="auto"></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Name="topDescription" Orientation="Horizontal">
                         <TextBlock FontSize="18" FontWeight="Bold" Text="{Binding Path=itemName}"></TextBlock>
                         <TextBlock FontSize="15" Text="{Binding Path=itemDescription}" TextWrapping="Wrap" Margin="10,0,0,0"></TextBlock>
                     </StackPanel>
@@ -66,7 +66,10 @@
                                         <TextBlock FontSize="18" Foreground="Black" Text="{Binding Path=Evaluate}" Margin="10,0,10,0"></TextBlock>
                                         <TextBlock FontSize="18" Foreground="Black" Text="{Binding Path=monthSale}"></TextBlock>
                                     </StackPanel>
-                                    <TextBlock Grid.Row="4" Grid.Column="1" FontSize="25" Foreground="#FF7F00" Text="{Binding Path=foodPrice}"></TextBlock>
+                                    <StackPanel Grid.Row="4" Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock  FontSize="25" Foreground="#FF7F00" Text="{Binding Path=foodPrice}"></TextBlock>
+                                        <TextBlock FontSize="20" Foreground="Pink" FontWeight="Black" Text="{Binding Path=foodLimitation}"></TextBlock>
+                                    </StackPanel>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>

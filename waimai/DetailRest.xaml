@@ -39,6 +39,38 @@
                         <TextBlock FontSize="18" FontWeight="Bold" Text="{Binding Path=itemName}"></TextBlock>
                         <TextBlock FontSize="15" Text="{Binding Path=itemDescription}" TextWrapping="Wrap" Margin="10,0,0,0"></TextBlock>
                     </StackPanel>
+                    <ListView Name="foodList">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Width="40" Grid.RowSpan="5" Source="{Binding Path=foodImage}"></Image>
+                                    <TextBlock Grid.Column="1" FontSize="22" FontWeight="Black" Foreground="Black" TextWrapping="Wrap" Text="{Binding Path=foodName}"></TextBlock>
+                                    <TextBlock Grid.Row="1" Grid.Column="1" FontSize="15"  Foreground="#F7F7F7" TextWrapping="Wrap" Text="{Binding Path=foodDescription}"></TextBlock>
+                                    <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                                        <TextBlock Foreground="Red" FontSize="18" Text="{Binding Path=foodAttributes1}"></TextBlock>
+                                        <TextBlock Foreground="Green" FontSize="18" Text="{Binding Path=foodAttributes2}"></TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+                                        <TextBlock FontSize="15" Foreground="Orange" Text="{Binding Path=rateStar}"></TextBlock>
+                                        <TextBlock FontSize="18" Foreground="Black" Text="{Binding Path=Evaluate}" Margin="10,0,10,0"></TextBlock>
+                                        <TextBlock FontSize="18" Foreground="Black" Text="{Binding Path=monthSale}"></TextBlock>
+                                    </StackPanel>
+                                    <TextBlock Grid.Row="4" Grid.Column="1" FontSize="25" Foreground="#FF7F00" Text="{Binding Path=foodPrice}"></TextBlock>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </Grid>
             </Grid>
             <!--<TextBlock Name="tb1" Foreground="Black" FontWeight="Bold" FontSize="20" TextWrapping="Wrap"></TextBlock>-->

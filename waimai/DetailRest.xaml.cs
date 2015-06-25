@@ -51,7 +51,9 @@ namespace waimai
         /// <param name="e">描述如何访问此页的事件数据。
         /// 此参数通常用于配置页。</param>
         string[] nameToCopy = new string[2] { "",""};
-        SpecificNRest wholeRest;
+        //SpecificNRest wholeRest;
+        List<topDescription> td;
+        List<topItem> ti;
         List<nFood> foodCollection;
         List<List<nFood>> foodCategory;
         nFood foodOne;
@@ -62,11 +64,11 @@ namespace waimai
             if (nameTo[0] != nameToCopy[0])
             {
                 //initialize
-                wholeRest = new SpecificNRest();
-                wholeRest.itemName = new List<string>();
-                wholeRest.itemDescription = new List<string>();
+                td = new List<topDescription>();
                 foodCollection = new List<nFood>();
                 foodCategory = new List<List<nFood>>();
+                ti = new List<topItem>();
+                td = new List<topDescription>();
                 restNameTb.Text = nameTo[1];
                 msg = new HttpResponseMessage();
                 string add = "http://restapi.ele.me/v1/restaurants/" + nameTo[0] + "/menu?full_image_path=1";
@@ -90,8 +92,12 @@ namespace waimai
                     foreach (var item in myArray)
                     {
                         JsonObject temp = item.GetObject();
-                        wholeRest.itemName.Add(temp["name"].GetString());
-                        wholeRest.itemDescription.Add(temp["description"].GetString());
+                        topDescription tempTd = new topDescription();
+                        topItem tempTi = new topItem();
+                        tempTi.itemName = temp["name"].GetString();
+                        tempTd.itemDescription = temp["description"].GetString();
+                        td.Add(tempTd);
+                        ti.Add(tempTi);
                         var foodArray = temp["foods"].GetArray();
                         foreach (var one in foodArray)
                         {
@@ -104,7 +110,7 @@ namespace waimai
                             else
                                 foodOne.foodImage = new BitmapImage(new Uri(jso["image_path"].GetString()));
                             foodOne.monthSale ="月售"+Convert.ToString( jso["month_sales"].GetNumber())+"份";
-                            foodOne.foodPrice = Convert.ToString(jso["price"].GetNumber());
+                            foodOne.foodPrice ="￥"+ Convert.ToString(jso["price"].GetNumber());
                             foodOne.Evaluate = Convert.ToString(jso["rating_count"].GetNumber()) + "评价";
                             double rate = jso["rating"].GetNumber();
                             if (rate > 4)
@@ -129,30 +135,30 @@ namespace waimai
                                 else
                                     foodOne.foodAttributes2 = (jso2["icon_name"].GetString() == null) ? "" : jso2["icon_name"].GetString();                                
                             }
-                            try
-                            {
-                                var limit = jso["limitation"].GetObject();
-                                foodOne.foodLimitation = limit["text"].GetString();
-                            }
-                            catch
-                            {
+                            //try
+                            //{
+                            //    var limit = jso["limitation"].GetObject();
+                            //    foodOne.foodLimitation = limit["text"].GetString();
+                            //}
+                            //catch
+                            //{
                                 foodOne.foodLimitation = "";
-                            }
+                            //}
                             foodCollection.Add(foodOne);
                         }
                         foodCategory.Add(foodCollection);
-                        foodCollection.Clear();
+                        foodCollection = new List<nFood>();
                     }
                    // wholeRest.allfoods = foodCollection;
                     //默认绑定第一个条目
-                    itemList.ItemsSource = wholeRest.itemName;
-                    topDescription td = new topDescription() { itemDescription = wholeRest.itemDescription[0], itemName = wholeRest.itemName[0] };
-                    topDescription.DataContext = td;
-                    foodList.ItemsSource = foodCategory[0];
-                nameToCopy = nameTo;
+                    itemList.ItemsSource = ti;
+                   // topDescription td = new topDescription() { itemDescription = wholeRest.itemDescription[0], itemName = wholeRest.itemName[0] };                    
+                    tbItemName.Text = ti[0].itemName;
+                    tbItemDecription.Text = td[0].itemDescription;
+                    foodList.ItemsSource =(List<nFood>)foodCategory[0];
+                    
             }
-            else
-                return;
+            nameToCopy = nameTo;
         }
 
         private void HardwareButtons_BackPressed(object sender, Windows.Phone.UI.Input.BackPressedEventArgs e)

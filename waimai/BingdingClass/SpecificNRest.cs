@@ -27,9 +27,13 @@ namespace waimai.BingdingClass
         public string foodLimitation { set; get; }
         public string foodDescription { set; get; }
     }
-    public class topDescription
+    public class topItem
     {
         public string itemName { set; get; }
+        
+    }
+    public class topDescription
+    {
         public string itemDescription { set; get; }
     }
 }

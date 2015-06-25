@@ -53,6 +53,7 @@ namespace waimai
         string[] nameToCopy = new string[2] { "",""};
         SpecificNRest wholeRest;
         List<nFood> foodCollection;
+        List<List<nFood>> foodCategory;
         nFood foodOne;
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -61,11 +62,11 @@ namespace waimai
             if (nameTo[0] != nameToCopy[0])
             {
                 //initialize
-                wholeRest=new SpecificNRest();
+                wholeRest = new SpecificNRest();
                 wholeRest.itemName = new List<string>();
                 wholeRest.itemDescription = new List<string>();
-                foodCollection=new List<nFood>();
-                foodOne=new nFood();
+                foodCollection = new List<nFood>();
+                foodCategory = new List<List<nFood>>();
                 restNameTb.Text = nameTo[1];
                 msg = new HttpResponseMessage();
                 string add = "http://restapi.ele.me/v1/restaurants/" + nameTo[0] + "/menu?full_image_path=1";
@@ -85,10 +86,6 @@ namespace waimai
                     ToastNotification toast = new ToastNotification(toastXml);
                     ToastNotificationManager.CreateToastNotifier().Show(toast);
                 }
-                Popup p = new Popup();
-               // try
-                //{
-                    // responseText = "{" + responseText + "}";
                     myArray = JsonArray.Parse(responseText);
                     foreach (var item in myArray)
                     {
@@ -98,6 +95,7 @@ namespace waimai
                         var foodArray = temp["foods"].GetArray();
                         foreach (var one in foodArray)
                         {
+                            foodOne = new nFood();
                             JsonObject jso = one.GetObject();
                             foodOne.foodDescription = jso["description"].GetString();
                             foodOne.foodName = jso["name"].GetString();
@@ -125,9 +123,11 @@ namespace waimai
                             {
                                 JsonObject jso2 = attribute[i].GetObject();
                                 if (i == 0)
-                                    foodOne.foodAttributes1 = jso2["icon_name"].GetString();
+                                {
+                                    foodOne.foodAttributes1 = (jso2["icon_name"].GetString()==null)?"":jso2["icon_name"].GetString();
+                                }
                                 else
-                                    foodOne.foodAttributes2 = jso2["icon_name"].GetString();                                
+                                    foodOne.foodAttributes2 = (jso2["icon_name"].GetString() == null) ? "" : jso2["icon_name"].GetString();                                
                             }
                             try
                             {
@@ -138,36 +138,17 @@ namespace waimai
                             {
                                 foodOne.foodLimitation = "";
                             }
+                            foodCollection.Add(foodOne);
                         }
-                        foodCollection.Add(foodOne);
+                        foodCategory.Add(foodCollection);
+                        foodCollection.Clear();
                     }
-                    wholeRest.allfoods = foodCollection;
+                   // wholeRest.allfoods = foodCollection;
                     //默认绑定第一个条目
                     itemList.ItemsSource = wholeRest.itemName;
                     topDescription td = new topDescription() { itemDescription = wholeRest.itemDescription[0], itemName = wholeRest.itemName[0] };
                     topDescription.DataContext = td;
-                    foodList.ItemsSource = wholeRest.allfoods[0];
-                //}
-                //catch
-                //{
-                //    TextBlock tb = new TextBlock();
-                //    tb.Text = "数据解析发生未知错误";
-                //    tb.FontSize = 20;
-                //    tb.VerticalAlignment = VerticalAlignment.Center;
-                //    tb.HorizontalAlignment = HorizontalAlignment.Center;
-                //    StackPanel Panel = new StackPanel();
-                //    Panel.Background = new SolidColorBrush(Windows.UI.Colors.Cyan);
-                //    Panel.HorizontalAlignment = HorizontalAlignment.Center;
-                //    Panel.VerticalAlignment = VerticalAlignment.Center;
-                //    Panel.Height = 40;
-                //    Panel.Width = 400;
-                //    Panel.Children.Add(tb);
-                //    p.Child = Panel;
-                //    p.IsOpen = true;
-                //}
-                //await Task.Delay(2000);
-                //p.IsOpen = false;
-                
+                    foodList.ItemsSource = foodCategory[0];
                 nameToCopy = nameTo;
             }
             else

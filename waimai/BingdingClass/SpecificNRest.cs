@@ -11,7 +11,7 @@ namespace waimai.BingdingClass
     {
         public List<string> itemName { set; get; }//eg 热销榜
         public List<string> itemDescription { set; get; }//eg 大家喜欢吃，才叫真好吃
-        public List<nFood> allfoods { set; get; }//
+       // public List<nFood> allfoods { set; get; }//
     }
     public class nFood
     {

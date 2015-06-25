@@ -144,7 +144,7 @@ namespace waimai
                     wholeRest.allfoods = foodCollection;
                     //默认绑定第一个条目
                     itemList.ItemsSource = wholeRest.itemName;
-                    topDescription td=new topDescription(){itemDescription=wholeRest.itemName[0],itemName=wholeRest.itemDescription[0]};
+                    topDescription td = new topDescription() { itemDescription = wholeRest.itemDescription[0], itemName = wholeRest.itemName[0] };
                     topDescription.DataContext = td;
                     foodList.ItemsSource = wholeRest.allfoods[0];
                 //}

@@ -105,7 +105,7 @@ namespace waimai
                                 foodOne.foodImage = new BitmapImage(new Uri("ms-appx:///Assets/defaultPic.jpg"));
                             else
                                 foodOne.foodImage = new BitmapImage(new Uri(jso["image_path"].GetString()));
-                            foodOne.monthSale =Convert.ToString( jso["month_sales"].GetNumber());
+                            foodOne.monthSale ="月售"+Convert.ToString( jso["month_sales"].GetNumber())+"份";
                             foodOne.foodPrice = Convert.ToString(jso["price"].GetNumber());
                             foodOne.Evaluate = Convert.ToString(jso["rating_count"].GetNumber()) + "评价";
                             double rate = jso["rating"].GetNumber();
@@ -144,7 +144,7 @@ namespace waimai
                     wholeRest.allfoods = foodCollection;
                     //默认绑定第一个条目
                     itemList.ItemsSource = wholeRest.itemName;
-                    topDescription td = new topDescription() { itemDescription = wholeRest.itemDescription[0], itemName = wholeRest.itemName[0] };
+                    topDescription td=new topDescription(){itemDescription=wholeRest.itemName[0],itemName=wholeRest.itemDescription[0]};
                     topDescription.DataContext = td;
                     foodList.ItemsSource = wholeRest.allfoods[0];
                 //}

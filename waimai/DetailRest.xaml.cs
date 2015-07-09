@@ -87,14 +87,19 @@ namespace waimai
                     element[0].AppendChild(toastXml.CreateTextNode("获取远程数据时发生意外，请检查您的网络"));
                     ToastNotification toast = new ToastNotification(toastXml);
                     ToastNotificationManager.CreateToastNotifier().Show(toast);
+                    nameToCopy = new string[2] { "", "" };
+                    return;
                 }
+                int tabIndex = 0;
                     myArray = JsonArray.Parse(responseText);
                     foreach (var item in myArray)
                     {
+                        tabIndex++;
                         JsonObject temp = item.GetObject();
                         topDescription tempTd = new topDescription();
                         topItem tempTi = new topItem();
                         tempTi.itemName = temp["name"].GetString();
+                        tempTi.count = tabIndex-1;
                         tempTd.itemDescription = temp["description"].GetString();
                         td.Add(tempTd);
                         ti.Add(tempTi);
@@ -174,10 +179,28 @@ namespace waimai
             if (Frame.CanGoBack)
                 this.Frame.GoBack();//Navigate(typeof(MainPage), 1);
         }
-
         private void itemList_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Debug.WriteLine(((ListViewItem)e.ClickedItem).TabIndex);
+            //Border t = (Border)itemList.SelectedItem;
+            //int x = itemList.SelectedIndex;
+           //Debug.WriteLine(((topItem)e.ClickedItem));
+            foodList.ItemsSource = null;
+            foodList.ItemsSource = foodCategory[((topItem)e.ClickedItem).count];
+            tbItemName.Text = ((topItem)e.ClickedItem).itemName;
+            tbItemDecription.Text = td[((topItem)e.ClickedItem).count].itemDescription;
+        }
+
+        private void Grid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            //Border t = (Border)itemList.SelectedItem;
+            //int x = itemList.SelectedIndex;
+            //for (int i = 0; i < x; i++)
+            //{
+                //x = (Grid)itemList.ContainerFromIndex(i);
+               // ((Grid)((Border)ic[i]).Child).Background = new SolidColorBrush(Windows.UI.Colors.LightGray);
+               // x.Background = new SolidColorBrush(Windows.UI.Colors.LightGray);
+            //}
+            ((Grid)sender).Background = new SolidColorBrush(Windows.UI.Colors.White);
         }
     }
 }

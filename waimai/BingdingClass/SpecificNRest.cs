@@ -30,6 +30,7 @@ namespace waimai.BingdingClass
     public class topItem
     {
         public string itemName { set; get; }
+        public int count { set; get; }
         
     }
     public class topDescription

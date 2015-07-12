@@ -147,7 +147,7 @@ namespace waimai
                             //}
                             //catch
                             //{
-                                foodOne.foodLimitation = "";
+                                foodOne.foodLimitation = "某些项目会有购买限制，在下单时请注意提示";
                             //}
                             foodCollection.Add(foodOne);
                         }
@@ -161,11 +161,22 @@ namespace waimai
                     tbItemName.Text = ti[0].itemName;
                     tbItemDecription.Text = td[0].itemDescription;
                     foodList.ItemsSource =(List<nFood>)foodCategory[0];
-                    
+                    setColor(cd, zp, ct);                                        
             }
             nameToCopy = nameTo;
         }
-
+        /// <summary>
+        /// 蓝和灰颜色的toggle
+        /// </summary>
+        /// <param name="a">a是突出显示</param>
+        /// <param name="b"></param>
+        /// <param name="c"></param>
+        public void setColor(Grid a,Grid b,Grid c)
+        {
+            a.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(100, 92, 172, 238));
+            b.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 247, 247, 247));
+            c.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 247, 247, 247));
+        }
         private void HardwareButtons_BackPressed(object sender, Windows.Phone.UI.Input.BackPressedEventArgs e)
         {
             e.Handled = true;
@@ -179,11 +190,13 @@ namespace waimai
             if (Frame.CanGoBack)
                 this.Frame.GoBack();//Navigate(typeof(MainPage), 1);
         }
+        int gridCount = 0;
         private void itemList_ItemClick(object sender, ItemClickEventArgs e)
         {
             //Border t = (Border)itemList.SelectedItem;
             //int x = itemList.SelectedIndex;
            //Debug.WriteLine(((topItem)e.ClickedItem));
+            gridCount = ((topItem)e.ClickedItem).count;
             foodList.ItemsSource = null;
             foodList.ItemsSource = foodCategory[((topItem)e.ClickedItem).count];
             tbItemName.Text = ((topItem)e.ClickedItem).itemName;
@@ -200,7 +213,19 @@ namespace waimai
                // ((Grid)((Border)ic[i]).Child).Background = new SolidColorBrush(Windows.UI.Colors.LightGray);
                // x.Background = new SolidColorBrush(Windows.UI.Colors.LightGray);
             //}
-            ((Grid)sender).Background = new SolidColorBrush(Windows.UI.Colors.White);
+            ti[gridCount].itemGrid = (Grid)sender;
+            for (int i = 0; i < ti.Count;i++ )
+            {
+                if (ti[i].itemGrid != null)
+                    ti[i].itemGrid.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255,245,245,245));
+            }
+            ((Grid)sender).Background = new SolidColorBrush(Windows.UI.Color.FromArgb(80, 92, 172, 238));
+            gridCount = 0;
+        }
+
+        private void Image_Tapped_1(object sender, TappedRoutedEventArgs e)
+        {
+
         }
     }
 }

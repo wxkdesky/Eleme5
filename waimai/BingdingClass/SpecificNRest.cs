@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace waimai.BingdingClass
@@ -31,6 +32,7 @@ namespace waimai.BingdingClass
     {
         public string itemName { set; get; }
         public int count { set; get; }
+        public Grid itemGrid { set; get; }
         
     }
     public class topDescription

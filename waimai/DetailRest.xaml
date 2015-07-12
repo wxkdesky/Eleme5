@@ -17,15 +17,15 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="120"></ColumnDefinition>
+                    <ColumnDefinition Width="133.3"></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <ListView Name="itemList" Grid.Column="0" IsItemClickEnabled="True" ItemClick="itemList_ItemClick">
+                <ListView Name="itemList"  Grid.Column="0" IsItemClickEnabled="True" ItemClick="itemList_ItemClick" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <!--I will go on tomorrow-->
-                            <Border BorderBrush="Pink" BorderThickness="1">
-                            <Grid Background="#E3E3E3" Width="120" Tapped="Grid_Tapped">
+                            <Border BorderBrush="Pink" BorderThickness="1" >
+                                <Grid Background="#F5F5F5" Tapped="Grid_Tapped" Width="133.3">
                                 <TextBlock TextAlignment="Center" HorizontalAlignment="Center" FontSize="28" TextWrapping="Wrap" Text="{Binding Path=itemName}"  VerticalAlignment="Center"></TextBlock>
                             </Grid>
                             </Border>
@@ -69,9 +69,10 @@
                                         <TextBlock FontSize="15" Foreground="Black" Text="{Binding Path=Evaluate}" Margin="10,0,10,0"></TextBlock>
                                         <TextBlock FontSize="15" Foreground="Black" Text="{Binding Path=monthSale}"></TextBlock>
                                     </StackPanel>
-                                    <StackPanel Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="-10,0,0,0">
-                                    <TextBlock  FontSize="25" Foreground="#FF7F00" Text="{Binding Path=foodPrice}"></TextBlock>
-                                        <TextBlock FontSize="20" Foreground="Pink" FontWeight="Black" Text="{Binding Path=foodLimitation}"></TextBlock>
+                                    <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="0,0,0,0">
+                                    <TextBlock  FontSize="25" Foreground="#FF7F00" Text="{Binding Path=foodPrice}" Margin="160,0,0,0"></TextBlock>
+                                        <Image Source="/Assets/addg.png" HorizontalAlignment="Right" Width="40" Tapped="Image_Tapped_1" Margin="0,0,15,0"></Image>
+                                        <TextBlock FontSize="13" Foreground="Red" FontWeight="Black" Text="{Binding Path=foodLimitation}" TextWrapping="Wrap"></TextBlock>
                                     </StackPanel>
                                 </Grid>
                             </DataTemplate>
@@ -94,9 +95,15 @@
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <TextBlock FontSize="25" Foreground="Black" Text="菜单" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                <TextBlock Grid.Column="1" FontSize="25" Foreground="Black" Text="照片" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                <TextBlock Grid.Column="2" FontSize="25" Foreground="Black" Text="餐厅" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                <Grid Name="cd"  Margin="0,0,0,0">
+                    <TextBlock  FontSize="25" Foreground="Black" Text="菜单" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Grid>
+                <Grid Name="zp" Grid.Column="1" >
+                    <TextBlock   FontSize="25" Foreground="Black" Text="照片" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Grid>
+                <Grid Name="ct" Grid.Column="2" >
+                    <TextBlock   FontSize="25" Foreground="Black" Text="餐厅" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Grid>
             </Grid>
         </Grid>
     </Grid>
